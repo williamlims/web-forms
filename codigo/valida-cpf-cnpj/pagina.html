@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campo CPF - CNPJ</title>
+</head>
+<body>
+    <form action="">
+        <input type="text" id="cpf-cnpj" data-mask-for-cpf-cnpj/>
+    </form>
+    <script src="js/jquery-3.6.0.js"></script>
+    <script src="js/jquery.mask.js"></script>
+    <script src="codigo/cnpj.js"></script>
+    <script src="codigo/cpf.js"></script>
+    <script>
+        $(document).on('keydown', '[data-mask-for-cpf-cnpj]', function (e) {
+
+            var digit = e.key.replace(/\D/g, '');
+
+            var value = $(this).val().replace(/\D/g, '');
+
+            var size = value.concat(digit).length;
+
+            $(this).mask((size <= 11) ? '000.000.000-00' : '00.000.000/0000-00');
+        });
+
+        $("#cpf-cnpj").blur(function(){
+            if($("#cpf-cnpj").val().length == 14){
+                if(TestaCPF($("#cpf-cnpj").val()) ==  false){
+                    alert("CPF/CNPJ invalido!");
+                    $("#cpf-cnpj").val("");
+                }
+            } else if($("#cpf-cnpj").val().length == 18){
+                if(validarCNPJ($("#cpf-cnpj").val()) ==  false){
+                    alert("CPF/CNPJ invalido!");
+                    $("#cpf-cnpj").val("");
+                }
+            } else {
+                alert("CPF/CNPJ invalido!");
+                $("#cpf-cnpj").val("");
+            }
+        })
+    </script>
+</body>
+</html>
